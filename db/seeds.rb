@@ -12,5 +12,5 @@ product.save
 product = Product.new(name: "HP Omen 15", price: 1000, image_url: "", description: "A sick gaming laptop with a 120 Hz screen, a Ryzen 7 processor, and an Nvidia 1660 GTX GPU")
 product.save
 
-prodcut = Product.new(name: "Yeti Tumbler", price: 30, image_url: "", description: "Stainless steel 32 oz tumbler with a lid")
+product = Product.new(name: "Yeti Tumbler", price: 30, image_url: "", description: "Stainless steel 32 oz tumbler with a lid")
 product.save
