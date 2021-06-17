@@ -22,4 +22,14 @@ class ProductsController < ApplicationController
     product = Product.third
     render json: product.as_json
   end
+
+  def product_by_param
+    product = Product.find_by(id: params["id"])
+    render json: product
+  end
+
+  def product_by_name
+    product = Product.find_by(name: params["name"])
+    render json: product
+  end
 end
