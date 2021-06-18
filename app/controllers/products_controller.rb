@@ -17,7 +17,7 @@ class ProductsController < ApplicationController
   def create
     product = Product.new(
       name: params[:name],
-      price: params[:price]
+      price: params[:price],
       image_url: params[:image_url],
       description: params[:description],
     )
@@ -36,5 +36,13 @@ class ProductsController < ApplicationController
 
     product.save
     render json: product.as_json
+  end
+
+  def destroy
+    product_id = params[:id]
+    product = Product.find(product_id)
+    product.destroy
+
+    render json: { message: "Product successfully deleted" }
   end
 end
