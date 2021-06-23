@@ -20,6 +20,7 @@ class ProductsController < ApplicationController
       price: params[:price],
       image_url: params[:image_url],
       description: params[:description],
+      stock: params[:stock],
     )
     product.save
     render json: product
