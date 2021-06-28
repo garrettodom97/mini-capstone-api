@@ -21,12 +21,16 @@ class ProductsController < ApplicationController
       image_url: params[:image_url],
       description: params[:description],
       stock: params[:stock],
-      supplier_id: params[supplier_id],
+      supplier_id: params[:supplier_id],
     )
-    if product.save
-      render json: product
+    if current_user
+      if product.save
+        render json: product
+      else
+        render json: { errors: product.errors.full_messages }, status: :unprocessable_entity
+      end
     else
-      render json: { errors: product.errors.full_messages }, status: :unprocessable_entity
+      render json: {}, status: :unauthorized
     end
   end
 
