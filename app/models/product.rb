@@ -5,6 +5,7 @@ class Product < ApplicationRecord
   validates :stock, numericality: { only_integer: true, greater_than: 0 }
 
   belongs_to :supplier
+  belongs_to :order
 
   def is_discounted?
     if price < 10
