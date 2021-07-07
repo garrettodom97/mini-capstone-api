@@ -1,22 +1,20 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user
+
   def create
-    if current_user
-      product = Product.find(params[:product_id])
-      order = Order.new(
-        user_id: current_user.id,
-        product_id: params[:product_id],
-        quantity: params[:quantity],
-        subtotal: product.price * params[:quantity].to_i,
-        tax: product.tax * params[:quantity].to_i,
-        total: product.total * params[:quantity].to_i,
-      )
-      if order.save
-        render json: order
-      else
-        render json: { errors: order.errors.full_messages }
-      end
+    product = Product.find(params[:product_id])
+    order = Order.new(
+      user_id: current_user.id,
+      product_id: params[:product_id],
+      quantity: params[:quantity],
+      subtotal: product.price * params[:quantity].to_i,
+      tax: product.tax * params[:quantity].to_i,
+      total: product.total * params[:quantity].to_i,
+    )
+    if order.save
+      render json: order
     else
-      render json: {}, status: :unauthorized
+      render json: { errors: order.errors.full_messages }
     end
   end
 
@@ -32,11 +30,7 @@ class OrdersController < ApplicationController
   end
 
   def index
-    if current_user
-      orders = current_user.orders
-      render json: orders
-    else
-      render json: {}, status: :unauthorized
-    end
+    orders = current_user.orders
+    render json: orders
   end
 end
