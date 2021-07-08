@@ -2,13 +2,8 @@ class OrdersController < ApplicationController
   before_action :authenticate_user
 
   def create
-    users_carted_products = current_user.carted_products.where("status = ?", "carted")
-    subtotal = 0
-    users_carted_products.each do |carted_product|
-      subtotal += carted_product.product.price * carted_product.quantity
-    end
-    tax = subtotal * 0.09
-    total = subtotal + tax
+    users_carted_products = current_user.carted_products.where(status: "carted")
+
     order = Order.new(
       subtotal: subtotal,
       tax: tax,
@@ -28,7 +23,7 @@ class OrdersController < ApplicationController
     order = Order.find(order_id)
 
     if order.user_id == current_user.id
-      render json: order
+      render json: order, include: '["id", "subtotal", "tax", "total", "carted_products", "carted_products.quantity", "carted_products.product", "carted_products.product.name"]'
     else
       render json: {}, status: :unauthorized
     end

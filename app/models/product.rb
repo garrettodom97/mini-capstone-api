@@ -13,6 +13,8 @@ class Product < ApplicationRecord
   has_many :orders, through: :carted_products
   has_many :users, through: :carted_products
 
+  has_many :images
+
   def is_discounted?
     if price < 10
       return true
